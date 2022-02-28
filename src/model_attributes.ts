@@ -11,6 +11,9 @@ interface Attribute {
     description : string; 
     foreign_id : string;  
     foreign_table : string;  
+    nullable : boolean;  
+    default : any;  
+    has_default : boolean;  
 } 
 
 export default class ModelAttributes {
@@ -107,10 +110,13 @@ export default class ModelAttributes {
                 value: value,
                 type: type,
                 model: '',
-                size: '64',
+                size: '',
                 description : '',
                 foreign_id : '', 
-                foreign_table : ''
+                foreign_table : '',
+                nullable : false,
+                default : null,
+                has_default : false,  
             }
 
             if(comment.length > 0) { 
@@ -120,7 +126,8 @@ export default class ModelAttributes {
                 }
                 let _default = this.getDefinition(comment, 'default');
                 if(_default) {
-                    attribute.value = _default;
+                    attribute.default = _default;
+                    attribute.has_default = true;
                 }
                 let _model = this.getDefinition(comment, 'model');
                 if(_model) {
@@ -138,6 +145,11 @@ export default class ModelAttributes {
                 if(_foreign_table) {
                     attribute.foreign_table = _foreign_table;
                 }
+                let _nullable = this.getDefinition(comment, 'nullable');
+                if(_nullable) {
+                    attribute.nullable = _nullable == 'true';
+                }
+              
                 
                 //get text after ] in content by regex 
                 let _description = comment.match(/\]\s*(.*)/);
@@ -229,18 +241,18 @@ export default class ModelAttributes {
                 col += `->onDelete('cascade')`;  
             }
             else{
-                if(attribute.type == 'string') {
-                    col += `->string('${attribute.key}',${attribute.size})`; 
-                    col += `->default(${attribute.value})`; 
+                col += `->${attribute.type}('${attribute.key}'`; 
+                if(attribute.size){
+                    col += `,${attribute.size}`; 
+                }
+                col += `)`; 
+
+                if(attribute.default){
+                    col += `->default(${attribute.default})`;  
                 } 
-                else if(attribute.type == 'float') {
-                    col += `->float('${attribute.key}')`; 
-                    col += `->default(${attribute.value})`; 
-                } 
-                else if(attribute.type == 'boolean') {
-                    col += `->boolean('${attribute.key}')`; 
-                    col += `->default(${attribute.value})`; 
-                } 
+            }
+            if(attribute.nullable) {
+                col += `->nullable()`; 
             }
             col += `->comment('${attribute.description}')`; 
 
