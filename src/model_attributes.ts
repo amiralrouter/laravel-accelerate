@@ -17,6 +17,8 @@ interface Attribute {
 } 
 
 export default class ModelAttributes {
+    translatable_sw: string = 'protected $translatable = [';
+    translatable_ew: string = '];';
     attributes_sw: string = 'protected $attributes = [';
     attributes_ew: string = '];';
     casts_sw: string = 'protected $casts = [';
@@ -81,6 +83,13 @@ export default class ModelAttributes {
         if(this.editor === undefined)
             return;
         let content = this.editor.document.getText();
+        let foundTranslatable = this.find(content, this.translatable_sw, this.translatable_ew);
+        if(foundTranslatable){
+            // find words between two "'" in foundTranslatable
+            let translatable = foundTranslatable.innerText.match(/(\w+)/g);
+
+        }
+
         let foundAttributes = this.find(content, this.attributes_sw, this.attributes_ew);
         if(foundAttributes === null) {
             return;
