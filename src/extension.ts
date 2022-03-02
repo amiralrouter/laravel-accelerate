@@ -7,7 +7,13 @@ import LaravelTable from './laravel_table';
 
 // const modelAttributes = new ModelAttributes();
 
-
+// const editor = vscode.window.activeTextEditor as vscode.TextEditor;
+// const document = editor.document;  
+// const model = new LaravelModel(editor);
+// console.log(model.attributes);
+// model.writeCasts();
+// const table = new LaravelTable(model);
+// table.repair();
 
  
 export function activate(context: vscode.ExtensionContext) { 
@@ -20,6 +26,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 		const model = new LaravelModel(editor);
 		model.writeCasts();
+		
 		const table = new LaravelTable(model);
 		table.repair();
  

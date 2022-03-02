@@ -153,9 +153,7 @@ export default class LaravelTable {
         let braceEnd = closureNode.loc.end.offset - 1;
         itemNodes.forEach((entry : IEntry) => {
             if(entry.leadingComments){ 
-                let commentText = entry.leadingComments.map(comment => comment.value).join('\n');
-                console.log(commentText);
-                
+                let commentText = entry.leadingComments.map(comment => comment.value).join('\n'); 
                 if(commentText.includes('custom')){
                     braceEnd = entry.leadingComments[0].loc.start.offset - 1;
                 }

@@ -90,7 +90,30 @@ export default class LaravelModel {
             this.attributes.push(attribute); 
         }); 
     }
-
+    isNumber(value: string | number): boolean{return ((value != null) && (value !== '') && !isNaN(Number(value.toString())));}
+    getAttributeType(entry: IEntry) : string{
+        if(entry.value.kind === 'string') return 'string';
+        const value = entry.value.value;
+        if(value === ''){
+            return 'string';
+        }
+        if(value === '{}'){
+            return 'array';
+        }
+        if(value === '[]'){
+            return 'array';
+        }
+        if(value === 'true' || value === 'false'){
+            return 'boolean';
+        }
+        if(this.isNumber(value)){
+            if(value.toString().indexOf('.') > -1){
+                return 'float';
+            }
+            return 'integer';
+        } 
+        return 'string';
+    }
     parseAttributes(){
         if(!this.attributesPropertyStatement) return;
 
@@ -115,21 +138,30 @@ export default class LaravelModel {
                 castable : true,
                 name : entry.key.value,
                 value : entry.value.raw || entry.value.value,
-                type : entry.value.kind,
+                type : this.getAttributeType(entry),
                 description : '',
                 properties : {} as {[key:string] : string}
             } as IAttribute;
             
-            let comment = entry.leadingComments ? entry.leadingComments.map((comment : IComment) => comment.value.trim()).join('') : '';
+
+            
+            let comment = '';
+            if(entry.leadingComments){
+                comment += entry.leadingComments.map((comment : IComment) => comment.value.trim()).join('')
+            }
+            if(entry.trailingComments){
+                comment += entry.trailingComments.map((comment : IComment) => comment.value.trim()).join('')
+            }
+            
             if(comment.length > 0){
-                let matchs = comment.match(/((.*?)(\[(.*?)\])|)\s*(.*?)$/) 
+                let matchs = comment.match(/((.*?)(\[(.*?)\])|)\s*(.*?)$/)  
        
                 if(matchs == null || matchs.length < 6) return;
                 let [, , , , _informations, _description] = matchs;
                 
                 if(_description) attribute.description = _description;
                
-                if(_informations){  
+                if(_informations){   
                     [..._informations.matchAll(/(\s*(\w+)\s*:\s*(\w+))/g)].forEach(match => {
                         let [, , name, value] = match;    
                         attribute.properties[name] = value; 

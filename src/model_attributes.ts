@@ -170,8 +170,7 @@ export default class ModelAttributes {
             this.attributes.push(attribute);
         }); 
 
-        this.has_timestamps = !content.includes('$timestamps = false;');
-        console.log(this.attributes); 
+        this.has_timestamps = !content.includes('$timestamps = false;'); 
     }
 
     repairCasts() {
