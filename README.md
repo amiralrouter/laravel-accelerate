@@ -1,4 +1,12 @@
 # Laravel Accelerate
+
+Automaticly fill casts and migration for Laravel with model attributes.
+
+just press  
+CTRL + L - CTRL + C
+
+![Laravel Accelerate](https://github.com/amiralrouter/laravel-accelerate/blob/main/images/preview.gif?raw=true)
+
  
 ## Attributions
 // [type:integer, dbType: float, default:2, model: Business, foreignId:id, foreignTable:businesses] *description of the attribute*  
