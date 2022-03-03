@@ -1,6 +1,6 @@
 # Laravel Accelerate
 
-Automaticly fill casts and migration for Laravel with model attributes.
+Automatically fill **casts** and **migration table columns** with model's attributes.
 
 just press  
 CTRL + L - CTRL + C
