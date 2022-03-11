@@ -9,12 +9,12 @@ CTRL + L - CTRL + C
 
  
 ## Attributions
-// [type:integer, dbType: float, default:2, model: Business, foreignId:id, foreignTable:businesses] *description of the attribute*  
+// [type:integer, dbType: float, default:2, class: Business, foreignId:id, foreignTable:businesses] *description of the attribute*  
   
 **type** : integer, string, float, array etc - *casting and Database column type*  
 **dbType** : float, integer, string etc - *database column type. if it defined, it will be used instead of type for database column type*  
 **default** : *default value*  
-**model** : *if the attribute is a model, this is the model name*  
+**class** : *if the attribute is a class, this is the model name or enum name*  
 **foreignId** : *if the attribute is a model, this is the foreign key*  
 **foreignTable** :  *if the attribute is a model, this is the foreign table*  
   
