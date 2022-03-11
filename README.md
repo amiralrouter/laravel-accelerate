@@ -33,31 +33,31 @@ use Spatie\Translatable\HasTranslations;
 
 class Category extends Model
 {
-	use HasTranslations;
+    use HasTranslations;
 
-	public $timestamps = false;
+    public $timestamps = false;
 
-	public $translatable = [
-		'name', 'slug', 'description',
-	];
+    public $translatable = [
+        'name', 'slug', 'description',
+    ];
 
-	protected $attributes = [
-		'business_id' => 1, // [type:integer, model: Business] Business ID
-        'parent_id' => 0, // [type:integer, model: Category] Parent ID
+    protected $attributes = [
+        'business_id' => 1, // [type:integer, class: Business] Business ID
+        'parent_id' => 0, // [type:integer, class: Category] Parent ID
         'order' => 0, // [type:integer] Order of the category
         'is_active' => true, // [type:boolean, default:true] Is the category active?
         'is_featured' => false, // [type:boolean, default:false] Is the category featured?
         'image_path' => null, // [type:string, size: 128, nullable:true] Image path
         'avarage_rating' => 0, // [type:float, default:0] Avarage rating
-	]; 
+    ]; 
 
-	protected $casts = [ ];
+    protected $casts = [ ];
 
-	protected $appends = [];
+    protected $appends = [];
 
-	protected $guarded = [];
+    protected $guarded = [];
 
-	protected $hidden = [];
+    protected $hidden = [];
 } 
 ```
 
